@@ -4,16 +4,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public class Puzzle{
-    
+
     String tempWord ="";
     ArrayList<String> guess = new ArrayList<String>();
     ArrayList<String> puzzle = new ArrayList<String>(); 
     ArrayList<String> wordList = new ArrayList<String>();
     ArrayList<String> words= new ArrayList<String>();
+    
     public Puzzle(){
 
         words= new ArrayList<String>();
-        
+
         try {
             File file = new File("words.txt");
             Scanner scanner = new Scanner(file);
@@ -26,6 +27,7 @@ public class Puzzle{
 
             //ONCE THIS LINE OF CODE IS REACHED, YOUR words ArrayList
             //CONTAINS ALL THE WORDS IN words.txt
+            tempWord = words.get((int)(Math.random()*words.size()));
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -33,17 +35,20 @@ public class Puzzle{
         for(int i = 0; i<tempWord.length();i++){
             wordList.add(tempWord.substring(i,i+1));
         }
+
     }
 
     public boolean isUnsolved(){
+        boolean right = false;
+        for(int i = 0; i<wordList.size();i++){
+            if(puzzle.contains(wordList.get(i))){
+                right = false;
 
-        if(puzzle.equals(wordList)){
-            return false;
-        }else if(puzzle.contains("_")){
-        return false;
-    }else{
-        return true;
-    }
+            }else{
+                right = true;
+            }
+        }
+        return right;
     }
 
     public boolean makeGuess(String guesses){
